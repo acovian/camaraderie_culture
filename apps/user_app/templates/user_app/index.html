@@ -1,0 +1,124 @@
+<html>
+<head>
+	<title>INDEX.USER</title>
+	<style type="text/css">
+
+		*{
+			font-style: helvetica;
+			font-weight: lighter;
+			font-family: sans-serif;
+		}
+
+		#camaraderie{
+			display: inline;
+			color: #404853;
+			margin: 10px;
+			font-size: 25px;
+		}
+		#culture{
+			display: inline;
+			color: #6799ff;
+			font-size: 25px;
+		}
+
+		#leftside{
+			display: inline-block;
+			width:600px;
+			margin-left: 100px;
+			color: #404853;
+		}
+			#leftside input{
+				margin: 5px;
+				font-size: 20px;
+				margin-left: 150px;
+				margin-top: 20px;
+				width: 250px;
+				border-style: none;
+			}
+
+			#register{
+				background-color: #6799ff;
+				color: white;
+			}
+
+			#errors{
+				color: red;
+			}
+		
+
+		#rightside{
+			display: inline-block;
+			margin-left: 200px;
+			vertical-align: top;
+			margin-top: -10px;
+			padding: 55px;
+			padding-top: 100px;
+			background-color: #404853;
+			height: 67%;
+		}
+			#rightside input{
+				font-size: 20px;
+				margin: 5px;
+				text-align: center;
+				margin-left: 20px;
+				margin-right: 20px;
+				border-style: none;
+				border-radius: 5px;
+				width: 200px;
+			}
+			#rightside h2{
+				color: white;
+				text-align: center;
+			}	
+			#login{
+				background-color:  #6799ff;
+				color: white;
+			}
+	</style>
+</head>
+<body>
+	<h1><div id = "camaraderie">C A M A R A D E R I E</div> <div id = "culture">C U L T U R E</div></h1>
+	<hr>
+
+	<div id = "leftside">
+		<h2>WANT TO JOIN?</h2>
+		<p>Camaraderie Culture is a free social media website that you can use to share your stories with the world! Become a member to get in on the action. You can deactivate your account anytime.</p>
+
+		<form action = "{% url 'user_app:register' %}" method="post">
+			{% csrf_token %}
+			<input type = 'email' name = 'email' placeholder='Email'><br>
+			<input type = 'text' name = 'username' placeholder='Username'><br>
+			<input type = 'text' name = 'first_name' placeholder='First Name'><br>
+			<input type = 'text' name ='last_name' placeholder='Last Name'><br>
+			<input type = 'password' name = 'password' placeholder='Password'><br>
+			<input type = 'password' name = 'confirm_password' placeholder='Confirm Password'><br>
+			<input id = 'register' type = 'submit' value="Let's Go!">
+		</form>
+		<div id = "errors">
+		{% for message in messages %}
+			{{message}}
+		{% endfor %}
+		</div>
+	</div>
+
+
+	<div id = "rightside">
+
+		<div id = "rightinner">
+
+		<h2>ALREADY WITH US?</h2>
+		<form action = "{% url 'user_app:login' %}" method="post">
+			{% csrf_token %}
+			<input type = 'email' name = 'email' placeholder = 'Email'><br>
+			<input type = 'password' name = 'password' placeholder = 'Password'><br>
+			<input id ='login' type = 'submit' value = "Log In">
+		</form>
+
+		</div>
+
+	</div>
+
+
+
+</body>
+</html>

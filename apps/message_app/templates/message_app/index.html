@@ -1,0 +1,235 @@
+<html>
+<head>
+	<title>INDEX.MESSAGES</title>
+	<style type="text/css">
+
+		*{
+			font-style: helvetica;
+			font-weight: lighter;
+			font-family: sans-serif;
+		}
+
+		#camaraderie{
+			display: inline-block;
+			color: #404853;
+			margin: 10px;
+			font-size: 25px;
+		}
+		#culture{
+			display: inline-block;
+			color: #6799ff;
+			font-size: 25px;
+		}
+
+		#navbar{
+			display: inline-block;
+			margin-left: 620px;
+			margin-top: -50px;
+		}
+			.navunit{
+				background-color: #404853;
+				color: white;
+				text-decoration: none;
+				padding: 5px;
+				padding-left: 20px;
+				padding-right: 20px;
+				margin: 10px;
+				border-radius: 2px;
+			}
+
+			#logout{
+				color: #6799ff;
+				text-decoration: none;
+				margin: 10px;
+			}
+
+		#main{
+			background-color: #404853;
+			border-top-style: solid;
+			border-width: .5px;
+		}
+
+		#postsuser{
+			color: #6799ff;
+			font-weight: bold;
+			text-decoration: none;
+			font-size: 20px;
+		}
+		#postmessage{
+			background-color: #6799ff;
+			font-size: 16px;
+			color: white;
+			padding: 5px;
+			border-style: none;
+			margin-left: 525px;
+		}
+			#messageuser{
+				display: block;
+				font-weight: bold;
+				color: #6799ff;
+				text-decoration: none;
+				margin-bottom: 10px;
+			}
+			#tomessage{
+				width: 640px;
+				font-size: 16px;
+			}
+
+			#posts{
+				display: inline-block;
+				background-color: white;
+				margin-left: 200px;
+				padding-top: 20px;
+				padding-left: 100px;
+				padding-right: 100px;
+				width: 650px;
+			}
+				#singlepost{
+					display: inline-block;
+					background-color: white;
+					margin-bottom: 20px;
+					width: 600px;
+					padding: 20px 20px 0px 20px;
+					border-style: solid;
+					border-width: .05px;
+					border-color: #404853;
+				}
+
+				#singlemessage{
+					margin-bottom: 10px;
+				}
+
+				#likepost{
+					background-color: #6799ff;
+					color: white;
+					padding: 5px 10px 5px 10px;
+					border-style: none;
+				}
+				#bottompost{
+					display: inline-block;
+					margin-left: 50px;
+					margin-top: -35px;
+					font-style: italic;
+				}
+
+				#comment{
+					display:block;
+					margin-left: 20px;
+					width: 550px;
+					font-size: 15px;
+				}
+					#commentuser{
+						color: #6799ff;
+						text-decoration: none;
+					}
+					#commentaction{
+						margin: 10px;
+						margin-left: 20px;
+					}
+					#writecomment{
+						font-size: 16px;
+						width: 485px;
+					}
+					#postcomment{
+						background-color: #6799ff;
+						border-style: none;
+						color: white;
+						padding: 4px;
+						font-size: 13px;
+						margin-left: -5px;
+					}
+
+		
+
+	</style>
+</head>
+<body>
+	<h1><div id = "camaraderie">C A M A R A D E R I E</div> <div id = "culture">C U L T U R E</div></h1>
+
+	<div id = "navbar">
+		<a href="{% url 'message_app:index' %}" class = "navunit">Home</a>
+		<a href="{% url 'message_app:popular' %}" class = "navunit">Popular</a>
+		<a href="{% url 'message_app:about' %}" class = "navunit">About</a>
+		<a href="{% url 'user_app:user' id=request.session.user.id %}" class = "navunit">Profile</a>
+		<a href="{% url 'user_app:logout' %}" id = "logout">Log Out</a>
+	</div>
+
+	
+
+	<div id = "main">
+
+		<br>
+		<div id = "posts">
+
+		<a id = "postsuser" href = "{% url 'user_app:user' id=request.session.user.id %}">{{request.session.user.username}}</a>:<br>
+		<form action = "{% url 'message_app:newmessage' %}" method="post">
+			{% csrf_token %}
+			<textarea id = "tomessage" name = "message" placeholder="Write something to share with your friends"></textarea>
+			<br>
+			<input id = "postmessage" type = "submit" value = "Post Message">
+		</form>
+
+		{% for message in posts %}
+
+			<div id = "singlepost">
+			<a id = "messageuser" href = "{% url 'user_app:user' id=message.user.id %}">{{message.user.username}}</a>
+			<div id = "singlemessage">{{message.message}}</div>
+
+
+				<form action = "{% url 'message_app:like' message.id %}" method="post">
+					{% csrf_token %}
+					<input id = "likepost" type = "submit" value = "LIKE">
+					<input type = "hidden" name = "message" value = "{{message.id}}">
+					<input type = "hidden" name = "user" value = "{{request.session.user.id}}">
+				</form>
+
+			<div id = "bottompost">
+				{{message.messagelikes.count}} likes
+
+					{% for like in message.messagelikes.all %}
+						{% if like.user.id == request.session.user.id %}
+							- <u>You liked this</u>
+						{% endif %}
+					{% endfor %}
+			</div>
+
+				<hr>
+
+				Comments:
+
+				{% for comment in message.comment.all %}
+				<div id = "comment">
+					<hr>
+					<a id = "commentuser" href = "{% url 'user_app:user' id=comment.user.id %}">{{comment.user.username}}</a>
+					{{comment.comment}}<br>
+				</div>
+				{% empty %}
+					<p>0 Comments</p>
+				{% endfor %}
+
+				{% for message in messages %}
+					{{message}}
+				{% endfor %}
+					<form id = "commentaction" action = "{% url 'message_app:comment' message.id %}" method="post">
+						{% csrf_token %}
+						<input id = "writecomment" type = 'text' name = 'comment' placeholder = "Post a Comment">
+						<input type = "hidden" name = "user" value = "{{request.session.user.id}}">
+						<input id = "postcomment" type = 'submit' value = "Comment">
+					</form>
+				<br>
+
+			{% if message.user.id == request.session.id %}
+				<a href="{% url 'message_app:delete' message.id %}">DELETE</a>
+			{% endif %}
+
+			</div>
+		{% empty %}
+
+			<p>No messages yet.</p>
+		{% endfor %}
+		</div>
+
+	</div>
+
+</body>
+</html>
