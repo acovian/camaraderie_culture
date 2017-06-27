@@ -46,20 +46,27 @@
 			background-color: #404853;
 			border-top-style: solid;
 			border-width: .5px;
-			height: 555px;
 		}
 
 		h1{
 			color: #6799ff;
 		}
-			#posts{
-				display: inline-block;
+		#bodymain{
+			background-color: white;
+			width: 800px;
+			margin-top: 20px; 
+			margin-left: 225px;
+			padding: 30px;
+			padding-top: 10px;
+		}
+			#comment{
+				display: block;
 				background-color: white;
-				margin-left: 200px;
-				margin-top: 50px;
-				padding: 50px 150px 100px 100px;
-				width: 650px;
+				margin-left: 30px;
+				padding: 5px;
 			}
+
+
 	</style>
 </head>
 <body>
@@ -76,47 +83,55 @@
 
 	<div id = "main">
 
-	<br>
-	<h1>{{user.username}}</h1>
-	<p>{{user.description}}</p>
+		<div id = "bodymain">
 
-	{% if user.id == request.session.user.id %}
-		<form action = "{% url 'message_app:newmessage' %}" method="post">
-			{% csrf_token %}
-			<textarea name = "message"></textarea>
-			<br>
-			<input type = 'submit' value = "Post Message">
-		</form>
-	{% endif %}
+		<br>
+		<h1>{{user.username}}</h1>
+		<p>{{user.description}}</p>
 
-	{% for message in messages %}
-		<a href ="{% url 'user_app:user' id=message.user.id %}">{{message.user.username}}</a>
-		{{message.message}}<br>
-		({{message.messagelikes.count}} likes)
-			{% for like in message.messagelikes.all %}
-				{% if like.user.id == request.session.user.id %}
-					You liked this
-				{% endif %}
+		{% if user.id == request.session.user.id %}
+			<form action = "{% url 'message_app:newmessage' %}" method="post">
+				{% csrf_token %}
+				<textarea name = "message"></textarea>
+				<br>
+				<input type = 'submit' value = "Post Message">
+			</form>
+		{% endif %}
+
+		{% for message in messages %}
+			<a href ="{% url 'user_app:user' id=message.user.id %}">{{message.user.username}}</a>
+			{{message.message}}<br>
+			({{message.messagelikes.count}} likes)
+				{% for like in message.messagelikes.all %}
+					{% if like.user.id == request.session.user.id %}
+						You liked this
+					{% endif %}
+				{% endfor %}
+
+					<form action = "{% url 'message_app:like' message.id %}" method="post">
+					{% csrf_token %}
+					<input type = "submit" value = "LIKE">
+					<input type = "hidden" name = "message" value = "{{message.id}}">
+					<input type = "hidden" name = "user" value = "{{request.session.user.id}}">
+				</form>
+
+			{% for comment in message.comment.all %}
+			<div id = "comment">	
+				<a href="{% url 'user_app:user' id=comment.user.id %}">{{comment.user.username}}</a>
+				{{comment.comment}}<br>
+			</div>
+			{% endfor %}
+			<form action = "{% url 'message_app:comment' id=request.session.user.id %}" method="post">
+				{% csrf_token %}
+				<input type = 'text' name = 'comment' placeholder = "Post a Comment">
+				<input type = 'hidden' name='message' value = "{{message.id}}">
+				<input type = 'submit' value = "Comment">
+				</form>
 			{% endfor %}
 
-				<form action = "{% url 'message_app:like' message.id %}" method="post">
-				{% csrf_token %}
-				<input type = "submit" value = "LIKE">
-				<input type = "hidden" name = "message" value = "{{message.id}}">
-				<input type = "hidden" name = "user" value = "{{request.session.user.id}}">
-			</form>
-		{% for comment in message.comment.all %}
-			<a href="{% url 'user_app:user' id=comment.user.id %}">{{comment.user.username}}</a>
-			{{comment.comment}}<br>
-		{% endfor %}
-		<form action = "{% url 'message_app:comment' id=request.session.user.id %}" method="post">
-			{% csrf_token %}
-			<input type = 'text' name = 'comment' placeholder = "Post a Comment">
-			<input type = 'hidden' name='message' value = "{{message.id}}">
-			<input type = 'submit' value = "Comment">
-		</form>
-	{% endfor %}
-</div>
+		</div>
+
+	</div>
 
 </body>
 </html>
