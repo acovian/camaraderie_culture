@@ -1,0 +1,71 @@
+*{
+	font-style: helvetica;
+	font-weight: lighter;
+	font-family: sans-serif;
+}
+
+#camaraderie{
+	display: inline-block;
+	color: #404853;
+	margin: 10px;
+	font-size: 25px;
+}
+#culture{
+	display: inline-block;
+	color: #6799ff;
+	font-size: 25px;
+}
+
+#navbar{
+	display: inline-block;
+	margin-left: 620px;
+	margin-top: -50px;
+}
+	.navunit{
+		background-color: #404853;
+		color: white;
+		text-decoration: none;
+		padding: 5px;
+		padding-left: 20px;
+		padding-right: 20px;
+		margin: 10px;
+		border-radius: 2px;
+	}
+
+	#logout{
+		color: #6799ff;
+		text-decoration: none;
+		margin: 10px;
+	}
+
+#main{
+	background-color: #404853;
+	border-top-style: solid;
+	border-width: .5px;
+}
+
+h1{
+	color: #6799ff;
+}
+#bodymain{
+	background-color: white;
+	width: 800px;
+	margin-top: 20px; 
+	margin-left: 225px;
+	padding: 30px;
+	padding-top: 10px;
+}
+#bodymain a{
+	color: #6799ff;
+	text-decoration: none;
+}
+	#comment{
+		display: block;
+		background-color: white;
+		margin-left: 30px;
+		padding: 5px;
+	}
+
+	#commenttext{
+		margin-left: 30px;
+	}
