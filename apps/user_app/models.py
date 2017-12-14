@@ -26,19 +26,19 @@ class UserManager(models.Manager):
 		password = data['password']
 		errors = []
 		if len(data['email'])<=1:
-			errors.append('Email cannot be blank.')
+			errors.append('* Email cannot be blank.')
 		if len(data['username'])<=1:
-			errors.append('Username cannot be blank.')
+			errors.append('* Username cannot be blank.')
 		if len(data['first_name'])<1:
-			errors.append('First name cannot be left empty.')
+			errors.append('* First name cannot be left empty.')
 		if len(data['last_name'])<1:
-			errors.append('Last name cannot be left empty.')
+			errors.append('* Last name cannot be left empty.')
 		if len(password)<=7:
-			errors.append('Password must contain at least eight characters')
+			errors.append('* Password must contain at least eight characters')
 		if password != data['confirm_password']:
-			errors.append('Passwords do not match.')
+			errors.append('* Passwords do not match.')
 		if self.filter(email=data['email']).exists():
-			errors.append('Whoops! Looks like that email is already in our database')
+			errors.append('* Whoops! Looks like that email is already in our database')
 		if errors:
 			return (False, errors)
 		else:
@@ -50,9 +50,9 @@ class UserManager(models.Manager):
 	def validatelogin(self, data):
 		errors = []
 		if len(data['email'])<1:
-			errors.append('Please include an email in order to log in.')
+			errors.append('* Please include an email in order to log in.')
 		if len(data['password'])<1:
-			errors.append('Please input your password in order to log in.')
+			errors.append('* Please input your password in order to log in.')
 		if errors:
 			return (False, errors)
 		try:

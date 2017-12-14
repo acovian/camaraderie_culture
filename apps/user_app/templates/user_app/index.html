@@ -11,7 +11,11 @@
 	<div id = "leftside">
 		<h2>WANT TO JOIN?</h2>
 		<p>Camaraderie Culture is a free social media website that you can use to share your stories with the world! Become a member to get in on the action. You can deactivate your account anytime.</p>
-
+    <div id = "errors">
+		{% for message in messages %}
+			{{message}} <br>
+		{% endfor %}
+		</div>
 		<form action = "{% url 'user_app:register' %}" method="post">
 			{% csrf_token %}
 			<input type = 'email' name = 'email' placeholder='Email'><br>
@@ -22,11 +26,7 @@
 			<input type = 'password' name = 'confirm_password' placeholder='Confirm Password'><br>
 			<input id = 'register' type = 'submit' value="Let's Go!">
 		</form>
-		<div id = "errors">
-		{% for message in messages %}
-			{{message}}
-		{% endfor %}
-		</div>
+
 	</div>
 
 
