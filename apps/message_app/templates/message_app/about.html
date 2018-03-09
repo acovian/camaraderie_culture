@@ -1,25 +1,25 @@
 <head>
-	<title>About | Camaraderie Culture</title>
-	{% load staticfiles %}
-	<link rel="stylesheet" type="text/css" href="{% static 'message_app/css/about.css' %}">
+  <title>About | Camaraderie Culture</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'message_app/css/about.css' %}">
 </head>
 <body>
-	<h1><div id = "camaraderie">C A M A R A D E R I E</div> <div id = "culture">C U L T U R E</div></h1>
+  <h1><div id = "camaraderie">C A M A R A D E R I E</div> <div id = "culture">C U L T U R E</div></h1>
 
-	<div id = "navbar">
-		<a href="{% url 'message_app:index' %}" class = "navunit">Home</a>
-		<a href="{% url 'message_app:popular' %}" class = "navunit">Popular</a>
-		<a href="{% url 'message_app:about' %}" class = "navunit">About</a>
-		<a href="{% url 'user_app:user' id=request.session.user.id %}" class = "navunit">Profile</a>
-		<a href="{% url 'user_app:logout' %}" id = "logout">Log Out</a>
-	</div>
+  <div id = "navbar">
+    <a href="{% url 'message_app:index' %}" class = "navunit">Home</a>
+    <a href="{% url 'message_app:popular' %}" class = "navunit">Popular</a>
+    <a href="{% url 'message_app:about' %}" class = "navunit">About</a>
+    <a href="{% url 'user_app:user' id=request.session.user.id %}" class = "navunit">Profile</a>
+    <a href="{% url 'user_app:logout' %}" id = "logout">Log Out</a>
+  </div>
 
-	<div id = "main">
-		<div id = "posts">
-			<h1>About Camaraderie Culture</h1>
-			<p>Camaraderie Culture is an online social media platform allowing users to share their stories with the world.</p>
-			<p>Put together with Python's Django framework, it was made to allow users to login and/or register to post stories, comment under stories, and like stories. The site also allows users to edit and delete their own posts.</p>
+  <div id = "main">
+    <div id = "posts">
+      <h1>About Camaraderie Culture</h1>
+      <p>Camaraderie Culture is an online social media platform allowing users to share their stories with the world.</p>
+      <p>Put together with Python's Django framework, it was made to allow users to login and/or register to post stories, comment under stories, and like stories. The site also allows users to edit and delete their own posts.</p>
 
-			<p>Users are also able to visit other users’ profiles and message them, as well as comment under preexisting messages on the user’s profile. The site’s main focus is on storytelling and “Camaraderie”.</p>
-		</div>
-	</div>
+      <p>Users are also able to visit other users’ profiles and message them, as well as comment under preexisting messages on the user’s profile. The site’s main focus is on storytelling and “Camaraderie”.</p>
+    </div>
+  </div>
